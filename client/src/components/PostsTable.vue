@@ -10,12 +10,12 @@
     </thead>
 
     <tbody>
-      <tr>
-        <td>1</td>
-        <td>Title One</td>
-        <td>Body 1</td>
+      <tr v-for="(record,index) in records" :key="record.id">
+        <td>{{ index+1 }}</td>
+        <td>{{ record.title }}</td>
+        <td>{{ record.body }}</td>
         <td>
-          <router-link :to="'/post/1'">
+          <router-link :to="'/post/'+record.id">
             <i class="material-icons">create</i>
           </router-link>
           <a href="#">
@@ -29,7 +29,24 @@
 
 <script>
 export default {
-  name: "PostTable"
+  name: "PostTable",
+  data() {
+    return {
+      records: null
+    };
+  },
+  mounted() {
+    fetch("http://localhost:3000/api/get/posts")
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        this.records = data;
+      })
+      .catch(err => {
+        throw err;
+      });
+  }
 };
 </script>
 

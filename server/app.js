@@ -21,6 +21,12 @@ const app = express();
 // parse application/json
 app.use(bodyParser.json())
 
+app.all('/*', function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+
 // Create Table
 app.get('/api/create/postTable', (req, res) => {
   let sql = 'CREATE TABLE posts(id int AUTO_INCREMENT, title VARCHAR(255), body VARCHAR(255), PRIMARY KEY (id))';
@@ -38,7 +44,7 @@ app.post('/api/create/post', (req, res) => {
   let sql = 'INSERT INTO posts SET ?';
   let query = db.query(sql, post, (err, result) => {
     if (err) throw err;
-    res.send('Post Added');
+    res.send(result);
   });
 })
 
@@ -47,7 +53,7 @@ app.get('/api/get/posts', (req, res) => {
   let sql = 'SELECT * FROM posts';
   let query = db.query(sql, (err, results) => {
     if (err) throw err;
-    res.send('Posts Fetched');
+    res.send(results);
   });
 })
 
@@ -56,7 +62,7 @@ app.get('/api/get/post/:id', (req, res) => {
   let sql = `SELECT * FROM posts WHERE id = ${req.params.id}`;
   let query = db.query(sql, (err, result) => {
     if (err) throw err;
-    res.send('Post Fetched');
+    res.send(result);
   });
 })
 
@@ -75,7 +81,7 @@ app.get('/api/delete/post/:id', (req, res) => {
   let sql = `DELETE FROM posts WHERE id = ${req.params.id}`;
   let query = db.query(sql, (err, result) => {
     if (err) throw err;
-    res.send('Post Deleted');
+    res.send(result);
   });
 })
 
