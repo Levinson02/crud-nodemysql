@@ -1,18 +1,15 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="row welcome-card">
+    <div class="col s12">
+      <div class="card-panel teal center-align lime darken-3">
+        <span
+          class="white-text"
+        >It's a simple CRUD app using Vue.js as Front-end and Node.js/Express.js/MySQL as backend</span>
+      </div>
+    </div>
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
-export default {
-  name: 'home',
-  components: {
-    HelloWorld
-  }
-}
-</script>
+
+
