@@ -15,10 +15,16 @@
         <td>{{ record.title }}</td>
         <td>{{ record.body }}</td>
         <td>
-          <router-link :to="'/post/'+record.id">
+          <router-link :to="'/post/'+record.id" style="color: #ffb300">
             <i class="material-icons">create</i>
           </router-link>
-          <a href="#">
+          <a
+            v-on:click="deleteRecord"
+            href="#"
+            class="remove-record"
+            :data-id="record.id"
+            style="color: #d50000"
+          >
             <i class="material-icons">delete</i>
           </a>
         </td>
@@ -46,6 +52,23 @@ export default {
       .catch(err => {
         throw err;
       });
+  },
+  methods: {
+    deleteRecord(e) {
+      let a = e.target.parentElement;
+      let attr = a.getAttribute("data-id");
+      let row = a.parentNode.parentNode;
+      fetch(`http://localhost:3000/api/delete/post/${attr}`)
+        .then(res => {
+          return res.json;
+        })
+        .then(data => {
+          row.parentNode.removeChild(row);
+        })
+        .catch(err => {
+          throw err;
+        });
+    }
   }
 };
 </script>

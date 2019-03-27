@@ -44,6 +44,7 @@ export default {
         })
         .then(data => {
           this.fields = "";
+          this.$router.push("/posts");
         })
         .catch(err => {
           throw err;
